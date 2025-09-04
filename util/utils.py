@@ -24,7 +24,7 @@ paddle_ocr = PaddleOCR(
     lang='en',  # other lang also available
     use_angle_cls=False,
     # max_batch_size=1024,
-    use_dilation=True,  # improves accuracy
+    #use_dilation=True,  # improves accuracy
     rec_batch_num=1024)
 import time
 import base64
