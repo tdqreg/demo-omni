@@ -26,7 +26,6 @@ paddle_ocr = PaddleOCR(
     use_gpu=False,  # using cuda will conflict with pytorch in the same process
     max_batch_size=1024,
     use_dilation=True,  # improves accuracy
-    det_db_score_mode='slow',  # improves accuracy
     rec_batch_num=1024)
 import time
 import base64
