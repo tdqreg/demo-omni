@@ -513,7 +513,7 @@ def check_ocr_box(image_source: Union[str, Image.Image], display_img = True, out
         else:
             text_threshold = easyocr_args['text_threshold']
         # result = paddle_ocr.ocr(image_np, cls=False)[0]
-        result = paddle_ocr.predict(image_np)[0]
+        result = paddle_ocr.ocr(image_np)[0]
         coord = [item[0] for item in result if item[1][1] > text_threshold]
         text = [item[1][0] for item in result if item[1][1] > text_threshold]
     else:  # EasyOCR
