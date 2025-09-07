@@ -22,7 +22,8 @@ from paddleocr import PaddleOCR
 reader = easyocr.Reader(['en'])
 paddle_ocr = PaddleOCR(
     lang='en',  # other lang also available
-    use_angle_cls=True,
+    use_textline_orientation=True,
+    #use_angle_cls=True,
     # max_batch_size=1024,
     #use_dilation=True,  # improves accuracy
     rec_batch_num=1024)
