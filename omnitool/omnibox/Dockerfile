@@ -1,7 +1,7 @@
 ARG VERSION_ARG="latest"
 FROM scratch AS build-amd64
 
-COPY --from=qemux/qemu-docker:6.08 / /
+COPY --from=qemux/qemu / /
 
 ARG DEBCONF_NOWARNINGS="yes"
 ARG DEBIAN_FRONTEND="noninteractive"
@@ -14,7 +14,6 @@ RUN set -eu && \
         jq \
         curl \
         7zip \
-        wsdd \
         samba \
         xz-utils \
         wimtools \
@@ -26,6 +25,11 @@ RUN set -eu && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN apt-get update && apt-get install -y git python3 python3-pip \
+ && git clone https://github.com/christgau/wsdd.git /opt/wsdd \
+ && ln -s /opt/wsdd/src/wsdd.py /usr/local/bin/wsdd \
+ && rm -rf /var/lib/apt/lists/
+ 
 COPY --chmod=755 ./vm/buildcontainer /run/
 RUN dos2unix /run/*
 
