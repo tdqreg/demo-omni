@@ -516,8 +516,15 @@ def check_ocr_box(image_source: Union[str, Image.Image], display_img = True, out
         result = paddle_ocr.predict(image_np)[0]
         print("OCR raw result:", result)
 
-        coord = [item[0] for item in result if item[1][1] > text_threshold]
-        text = [item[1][0] for item in result if item[1][1] > text_threshold]
+        # coord = [item[0] for item in result if item[1][1] > text_threshold]
+        # text = [item[1][0] for item in result if item[1][1] > text_threshold]
+        # PaddleOCR kiểu dict
+        texts_all  = result.get("rec_texts", [])
+        scores_all = result.get("rec_scores", [])
+        coords_all = result.get("rec_polys", result.get("dt_polys", []))
+
+        coord = [c for t, s, c in zip(texts_all, scores_all, coords_all) if s > text_threshold]
+        text  = [t for t, s in zip(texts_all, scores_all) if s > text_threshold]
     else:  # EasyOCR
         if easyocr_args is None:
             easyocr_args = {}
